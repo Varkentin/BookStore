@@ -10,25 +10,30 @@ namespace Store.Memory
     {
         private readonly Book[] books = new[]
         {
-            new Book(1,"ISBN1","Author1","test1"),
-            new Book(2,"ISBN2","Author2","test2"),
-            new Book(3,"ISBN3","Author3","test3"),
+            new Book(1,"ISBN 0201038013","Author1","test1"),
+            new Book(2,"ISBN 0201485672","Author2","test2"),
+            new Book(3,"ISBN 0131101633","Author3","test3"),
 
         };
 
         public Book[] GetAllByIsbn(string isbn)
         {
-            throw new NotImplementedException();
+            return books.Where(book => book.Isbn == isbn)
+                .ToArray();
         }
 
-        public Book[] GetAllByTitle(string title)
+
+
+        public Book[] GetAllByTitleOrAuthor(string query)
         {
-            return books.Where(book => book.Title.Contains(title)).ToArray();
+            return books.Where(book => book.Author.Contains(query)
+                                    || book.Title.Contains(query))
+                        .ToArray();
         }
 
-        public Book[] GetAllByTitleOrAuthor(string titleOrAuthor)
+        public Book GetById(int id)
         {
-            throw new NotImplementedException();
+            return books.Single(book => book.Id == id);
         }
     }
 }
