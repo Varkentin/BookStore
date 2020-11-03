@@ -10,14 +10,27 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Store.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-            </div>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Интернет-магазин</a>
+            <form class="form-inline my-2 my-lg-0" action="searh" method="get">
+                <input class="form-control mr-sm-2" type="search" name="query" placeholder="автор или название" />
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Искать</button>
+            </form>
+            <span class="navbar-text ml-auto">
+                @{
+                    Cart cart;
+                    if (!Context.Session.TryGetCart(out cart))
+                        cart = new Cart();
+
+                    if (cart.Items.Count == 0)
+                    {
+                        @:Корзина пуста
+                    }
+                    else
+                    {
+                        @:Товаров @cart.Items.Count на сумму @cart.Amount
+                    }
+                }
+            </span>
         </nav>
     </header>
     <div class="container">
@@ -26,11 +39,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Store.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
